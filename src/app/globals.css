@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -46,7 +47,9 @@
 body {
   color: #ffffff;
   background-color: #1a1a1a;
-  opacity: 1;
+  margin: 0;
+  padding: 0;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 :root {

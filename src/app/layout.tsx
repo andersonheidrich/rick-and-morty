@@ -1,19 +1,22 @@
-import { Header } from "@/components";
+"use client";
 import "./globals.css";
-import ApolloWrapper from "@/lib/apolloWrapper";
+import { ReactNode } from "react";
+import { ApolloProvider } from "@apollo/client";
+import client from "@/lib/apolloClient";
+import { Header } from "@/components";
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <ApolloWrapper>
+        <ApolloProvider client={client}>
           <Header />
           {children}
-        </ApolloWrapper>
+        </ApolloProvider>
       </body>
     </html>
   );
