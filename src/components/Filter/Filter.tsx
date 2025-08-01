@@ -35,33 +35,5 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
     </div>
   );
 };
-// width: 40;
-// height: 40;
-// angle: 0 deg;
-// opacity: 1;
-// padding-left: 16px;
-// border-top-left-radius: 12px;
-// border-bottom-left-radius: 12px;
-
-// lupa
-// width: 40;
-// height: 40;
-// angle: 0 deg;
-// opacity: 1;
-// padding-left: 16px;
-// border-top-left-radius: 12px;
-// border-bottom-left-radius: 12px;
-
-// caixa
-// width: 120;
-// height: 40;
-// angle: 0 deg;
-// opacity: 1;
-// padding-top: 8px;
-// padding-right: 16px;
-// padding-bottom: 8px;
-// padding-left: 8px;
-// border-top-right-radius: 12px;
-// border-bottom-right-radius: 12px;
 
 export default Filter;

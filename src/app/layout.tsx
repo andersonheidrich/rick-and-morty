@@ -1,5 +1,6 @@
 import { Header } from "@/components";
 import "./globals.css";
+import ApolloWrapper from "@/lib/apolloWrapper";
 
 export default function RootLayout({
   children,
@@ -9,8 +10,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Header />
-        {children}
+        <ApolloWrapper>
+          <Header />
+          {children}
+        </ApolloWrapper>
       </body>
     </html>
   );
