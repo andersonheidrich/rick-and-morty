@@ -4,7 +4,7 @@
 
 import { useQuery } from "@apollo/client";
 import { GET_CHARACTERS } from "@/graphql/queries";
-import { CharacterList, CharacterDetails } from "@/components";
+import { CharacterCard, CharacterDetails } from "@/components";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -24,13 +24,15 @@ export default function Home() {
     <div className="w-[1920px] h-[911px] px-[160px] py-[64px]">
       <div className="w-[1440px] max-w-[1440px] h-[783px]">
         <CharacterDetails id={selectedId as string} />
-        {data.characters.results.map((char: any) => (
-          <CharacterList
-            key={char.id}
-            character={char}
-            onSelect={() => setSelectedId(char.id)}
-          />
-        ))}
+        <div className="flex w-[1784px h-[413px] gap-[12px] p-[16px] overflow-hidden">
+          {data.characters.results.map((char: any) => (
+            <CharacterCard
+              key={char.id}
+              character={char}
+              onSelect={() => setSelectedId(char.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

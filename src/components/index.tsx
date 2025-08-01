@@ -1,3 +1,3 @@
 export { default as CharacterDetails } from "./CharacterDetails";
-export { default as CharacterList } from "./CharacterList";
+export { default as CharacterCard } from "./CharacterCard";
 export { default as Header } from "./Header";
