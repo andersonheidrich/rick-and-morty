@@ -1,6 +1,6 @@
 "use client";
 
-import Favorite from "../Favorite";
+// import Favorite from "../Favorite";
 import Filter from "../Filter";
 
 const Header = () => {
@@ -15,7 +15,7 @@ const Header = () => {
       </h1>
       <div className="flex max-w-[1670px] w-[100px] h-[40px] gap-[32px] justify-end columns-[2]">
         <Filter onFilterChange={handleFilterChange} />
-        <Favorite />
+        {/* <Favorite /> */}
       </div>
     </header>
   );
