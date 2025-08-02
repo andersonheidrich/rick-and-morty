@@ -2,7 +2,7 @@
 
 import { useQuery } from "@apollo/client";
 import { GET_CHARACTERS } from "@/graphql/queries";
-import { CharacterCarousel, CharacterDetails } from "@/components";
+import { CharacterCarousel, CharacterDetails, Navbar } from "@/components";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -22,7 +22,9 @@ export default function Home() {
     <div className="w-[1920px] h-[911px] px-[160px] py-[64px]">
       <div className="w-[1440px] max-w-[1440px] h-[783px]">
         {selectedId && <CharacterDetails id={selectedId} />}
+        <Navbar />
         <CharacterCarousel onSelectId={setSelectedId} />
+        {/* Criar componente <FavoriteCharacters /> que irá alternar com o carrossel */}
       </div>
     </div>
   );
