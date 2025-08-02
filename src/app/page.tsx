@@ -2,29 +2,66 @@
 
 import { useQuery } from "@apollo/client";
 import { GET_CHARACTERS } from "@/graphql/queries";
-import { CharacterCarousel, CharacterDetails, Navbar } from "@/components";
+import {
+  CharacterCarousel,
+  CharacterDetails,
+  Header,
+  Navbar,
+} from "@/components";
 import { useState, useEffect } from "react";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function Home() {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedMenu, setSelectedMenu] = useState("items");
+
+  const { favorites } = useFavorites();
 
   useEffect(() => {
-    if (data?.characters?.results?.length > 0 && !selectedId) {
-      setSelectedId(data.characters.results[0].id);
+    if (selectedMenu === "items") {
+      if (data?.characters?.results?.length > 0 && !selectedId) {
+        setSelectedId(data.characters.results[0].id);
+      }
     }
-  }, [data, selectedId]);
+  }, [data, selectedId, selectedMenu]);
+
+  useEffect(() => {
+    if (selectedMenu !== "favorites") return;
+
+    if (favorites.length === 0) {
+      setSelectedId(null);
+      return;
+    }
+
+    const currentIndex = favorites.indexOf(selectedId || "");
+
+    if (currentIndex === -1) {
+      const nextId =
+        favorites[Math.min(currentIndex + 1, favorites.length - 1)] ??
+        favorites[Math.max(currentIndex - 1, 0)] ??
+        favorites[0];
+
+      setSelectedId(nextId);
+    }
+  }, [favorites, selectedId, selectedMenu]);
 
   if (loading) return <p className="text-center">Carregando...</p>;
   if (error) return <p className="text-center">Erro: {error.message}</p>;
 
   return (
-    <div className="w-[1920px] h-[911px] px-[160px] py-[64px]">
-      <div className="w-[1440px] max-w-[1440px] h-[783px]">
-        {selectedId && <CharacterDetails id={selectedId} />}
-        <Navbar />
-        <CharacterCarousel onSelectId={setSelectedId} />
-        {/* Criar componente <FavoriteCharacters /> que irá alternar com o carrossel */}
+    <div className="max-w-[1920px] min-h-[1000px] min-w-[360px] max-h-[1391px]">
+      <Header />
+      <div className="w-[1440px] max-w-[1440px] h-[783px] px-[160px] py-[64px]">
+        {selectedId && (
+          <CharacterDetails id={selectedId} onChangeId={setSelectedId} />
+        )}
+        <Navbar selectedMenu={selectedMenu} onSelectMenu={setSelectedMenu} />
+        {selectedMenu === "items" ? (
+          <CharacterCarousel onSelectId={setSelectedId} />
+        ) : (
+          <CharacterCarousel onSelectId={setSelectedId} onlyFavorites />
+        )}
       </div>
     </div>
   );

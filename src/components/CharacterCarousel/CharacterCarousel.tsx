@@ -4,21 +4,33 @@
 import { useQuery } from "@apollo/client";
 import { GET_CHARACTERS } from "@/graphql/queries";
 import Image from "next/image";
+import { CharacterCarouselProps } from "./interfaces";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function CharacterCarousel({
   onSelectId,
-}: {
-  onSelectId: (id: string) => void;
-}) {
+  onlyFavorites = false,
+}: CharacterCarouselProps) {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
+  const { favorites } = useFavorites();
 
   if (loading) return <p className="text-center">Carregando...</p>;
   if (error) return <p className="text-center">Erro: {error.message}</p>;
 
+  const characters = onlyFavorites
+    ? data.characters.results.filter((character: any) =>
+        favorites.includes(character.id)
+      )
+    : data.characters.results;
+
+  if (onlyFavorites && characters.length === 0) {
+    return <p className="text-center">Nenhum personagem favoritado ainda.</p>;
+  }
+
   return (
     <div className="flex w-[1440px] h-[413px] overflow-x-auto overflow-y-hidden">
       <div className="flex w-[1784px] h-[413px] gap-[12px] p-[16px]">
-        {data.characters.results.map((character: any) => (
+        {characters.map((character: any) => (
           <button
             key={character.id}
             onClick={() => onSelectId(character.id)}
