@@ -24,17 +24,21 @@ export default function CharacterCarousel({
     : data.characters.results;
 
   if (onlyFavorites && characters.length === 0) {
-    return <p className="text-center">Nenhum personagem favoritado ainda.</p>;
+    return (
+      <div className="flex w-full h-[413px] justify-center items-center">
+        <p>Nenhum personagem favoritado.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="flex w-[1440px] h-[413px] overflow-x-auto overflow-y-hidden">
-      <div className="flex w-[1784px] h-[413px] gap-[12px] p-[16px]">
+    <div className="flex w-full h-[413px]">
+      <div className="flex w-full h-[413px] gap-[12px] p-4 overflow-x-auto overflow-y-hidden">
         {characters.map((character: any) => (
           <button
             key={character.id}
             onClick={() => onSelectId(character.id)}
-            className="flex-col w-[240px] h-[381px] min-w-[240px] gap-[16px] rounded-[8px] cursor-pointer hover:scale-103 transition-transform duration-250"
+            className="flex-col w-[240px] h-[381px] gap-[16px] rounded-[8px] cursor-pointer hover:scale-103 transition-transform duration-250"
           >
             <Image
               src={character.image}
