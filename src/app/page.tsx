@@ -50,9 +50,9 @@ export default function Home() {
   if (error) return <p className="text-center">Erro: {error.message}</p>;
 
   return (
-    <div className="max-w-[1920px] min-h-[1000px] min-w-[360px] max-h-[1391px]">
+    <div className="w-full min-h-screen ">
       <Header />
-      <div className="w-[1440px] max-w-[1440px] h-[783px] px-[160px] py-[64px]">
+      <div className="flex flex-col flex-1 h-full justify-between px-4 py-6 sm:px-6 md:px-12 lg:px-24 xl:px-36">
         {selectedId && (
           <CharacterDetails id={selectedId} onChangeId={setSelectedId} />
         )}
