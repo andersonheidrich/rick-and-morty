@@ -59,9 +59,18 @@ export default function Home() {
     <div className="w-full min-h-screen overflow-hidden">
       <Header onFilterChange={setSearchTerm} />
       <div className="flex flex-col flex-1 h-full justify-between px-4 py-6 sm:px-6 md:px-12 lg:px-24 xl:px-36">
-        {selectedId && (
-          <CharacterDetails id={selectedId} onChangeId={setSelectedId} />
-        )}
+        <div className="min-h-[344px] mb-6">
+          {selectedId ? (
+            <CharacterDetails id={selectedId} onChangeId={setSelectedId} />
+          ) : (
+            selectedMenu === "favorites" &&
+            favorites.length === 0 && (
+              <div className="flex flex-col md:flex-row w-full h-[580px] md:h-[344px] md:gap-[16px] px-4 py-3 items-center justify-center">
+                Nenhum personagem favoritado.
+              </div>
+            )
+          )}
+        </div>
         <Navbar selectedMenu={selectedMenu} onSelectMenu={setSelectedMenu} />
         {selectedMenu === "items" ? (
           <CharacterCarousel

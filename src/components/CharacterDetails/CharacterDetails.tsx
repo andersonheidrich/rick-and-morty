@@ -13,23 +13,25 @@ export default function CharacterDetails({
     variables: { id },
     skip: !id,
   });
+  const { setActiveCharacterId, setOnChangeId } = useActiveCharacter();
 
   const character = data?.character;
-
-  const { setActiveCharacterId, setOnChangeId } = useActiveCharacter();
 
   useEffect(() => {
     if (character?.id) {
       setActiveCharacterId(character.id);
     }
-  }, [character.id, setActiveCharacterId]);
+  }, [character?.id, setActiveCharacterId]);
 
   useEffect(() => {
     setOnChangeId?.(onChangeId);
   }, [onChangeId, setOnChangeId]);
 
   if (!id) return null;
-  if (loading) return <p className="text-center">Carregando personagem...</p>;
+  if (loading)
+    return (
+      <div className="flex flex-col md:flex-row w-full h-[580px] md:h-[344px] md:gap-[16px] px-4 py-3 items-center justify-center" />
+    );
   if (error) return <p className="text-center">Erro: {error.message}</p>;
   if (!character)
     return <p className="text-center">Carregando personagem...</p>;

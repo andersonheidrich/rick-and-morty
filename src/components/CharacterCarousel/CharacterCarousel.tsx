@@ -24,11 +24,7 @@ export default function CharacterCarousel({
     : data.characters.results;
 
   if (onlyFavorites && characters.length === 0) {
-    return (
-      <div className="flex w-full h-[413px] justify-center items-center">
-        <p>Nenhum personagem favoritado.</p>
-      </div>
-    );
+    return null;
   }
 
   return (
