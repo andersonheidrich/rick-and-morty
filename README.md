@@ -1,4 +1,4 @@
-# Itens Dinâmicos :: Teste FrontEnd
+# Rick and Morty
 
 Uma aplicação web que consome a API de Rick and Morty para exibir uma lista de personagens, permitindo visualizar detalhes individuais e marcar favoritos — que ficam salvos em um menu dedicado.
 
