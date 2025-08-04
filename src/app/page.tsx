@@ -10,16 +10,19 @@ import {
 } from "@/components";
 import { useState, useEffect } from "react";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useDebounce } from "use-debounce";
 
 export default function Home() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedMenu, setSelectedMenu] = useState("items");
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
 
   const { favorites } = useFavorites();
 
   const { data, loading, error } = useQuery(GET_CHARACTERS, {
-    variables: { name: searchTerm },
+    variables: { name: debouncedSearchTerm },
+    fetchPolicy: "no-cache",
   });
 
   const characters = data?.characters?.results ?? [];
