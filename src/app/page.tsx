@@ -52,7 +52,12 @@ export default function Home() {
     }
   }, [favorites, selectedId, selectedMenu]);
 
-  if (loading) return <p className="text-center">Carregando...</p>;
+  if (loading)
+    return (
+      <div className="flex w-screen h-screen overflow-hidden justify-center items-center">
+        Carregando...
+      </div>
+    );
   if (error) return <p className="text-center">Erro: {error.message}</p>;
 
   return (
