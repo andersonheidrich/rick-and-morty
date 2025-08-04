@@ -22,6 +22,8 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
           </div>
         </div>
         <input
+          id="search-input"
+          name="search"
           type="text"
           placeholder="Busca"
           value={searchTerm}
