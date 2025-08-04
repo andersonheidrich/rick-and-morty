@@ -66,7 +66,7 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen overflow-hidden">
       <Header onFilterChange={setSearchTerm} />
-      <div className="flex flex-col flex-1 h-full justify-between px-4 py-6 sm:px-6 md:px-12 lg:px-24 xl:px-36">
+      <div className="flex flex-col flex-1 h-full justify-between px-4 py-2 sm:px-6 md:px-12 lg:px-24 xl:px-36">
         <div className="min-h-[344px] mb-6">
           {selectedId ? (
             <CharacterDetails id={selectedId} onChangeId={setSelectedId} />
