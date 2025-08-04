@@ -6,14 +6,22 @@ import { GET_CHARACTERS } from "@/graphql/queries";
 import Image from "next/image";
 import { CharacterCarouselProps } from "./interfaces";
 import { useFavorites } from "@/hooks/useFavorites";
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, useState } from "react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
 export default function CharacterCarousel({
   onSelectId,
   onlyFavorites = false,
 }: CharacterCarouselProps) {
-  const { loading, error, data } = useQuery(GET_CHARACTERS);
+  const [page, setPage] = useState(1);
+  const { loading, error, data } = useQuery(GET_CHARACTERS, {
+    variables: { page },
+  });
   const { favorites } = useFavorites();
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -48,8 +56,30 @@ export default function CharacterCarousel({
     return null;
   }
 
+  const hasNextPage = data.characters.info.next;
+  const hasPrevPage = data.characters.info.prev;
+
+  const goToNextPage = () => {
+    if (hasNextPage) {
+      setPage((prev) => prev + 1);
+      scrollRef.current?.scrollTo({ left: 0 });
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (hasPrevPage) {
+      setPage((prev) => prev - 1);
+      scrollRef.current?.scrollTo({ left: 0 });
+    }
+  };
+
   return (
     <div className="flex w-full h-[413px] items-center">
+      <ChevronsLeft
+        onClick={goToPrevPage}
+        className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
+        aria-label="Scroll Left"
+      />
       <ChevronLeft
         className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
         onClick={scrollLeft}
@@ -81,6 +111,11 @@ export default function CharacterCarousel({
       <ChevronRight
         className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
         onClick={scrollRight}
+        aria-label="Scroll Right"
+      />
+      <ChevronsRight
+        onClick={goToNextPage}
+        className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
         aria-label="Scroll Right"
       />
     </div>
