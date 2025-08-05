@@ -4,6 +4,8 @@ export const GET_CHARACTERS = gql`
   query GetCharacters($page: Int = 1, $name: String) {
     characters(page: $page, filter: { name: $name }) {
       info {
+        count
+        pages
         next
         prev
       }
