@@ -6,7 +6,7 @@ import { GET_CHARACTERS } from "@/graphql/queries";
 import Image from "next/image";
 import { CharacterCarouselProps } from "./interfaces";
 import { useFavorites } from "@/hooks/useFavorites";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -19,10 +19,22 @@ export default function CharacterCarousel({
   onlyFavorites = false,
 }: CharacterCarouselProps) {
   const [page, setPage] = useState(1);
+  const [isVisible, setIsVisible] = useState(true);
   const { loading, error, data } = useQuery(GET_CHARACTERS, {
     variables: { page },
   });
   const { favorites } = useFavorites();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsVisible(window.innerWidth > 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -75,16 +87,20 @@ export default function CharacterCarousel({
 
   return (
     <div className="flex w-full h-[413px] items-center">
-      <ChevronsLeft
-        onClick={goToPrevPage}
-        className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
-        aria-label="Scroll Left"
-      />
-      <ChevronLeft
-        className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
-        onClick={scrollLeft}
-        aria-label="Scroll Left"
-      />
+      {onlyFavorites ? null : (
+        <ChevronsLeft
+          onClick={goToPrevPage}
+          className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
+          aria-label="Scroll Left"
+        />
+      )}
+      {isVisible ? (
+        <ChevronLeft
+          className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
+          onClick={scrollLeft}
+          aria-label="Scroll Left"
+        />
+      ) : null}
       <div
         ref={scrollRef}
         className="flex w-full h-[413px] gap-[12px] p-4 overflow-x-auto overflow-y-hidden scrollbar-hide"
@@ -108,16 +124,20 @@ export default function CharacterCarousel({
           </button>
         ))}
       </div>
-      <ChevronRight
-        className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
-        onClick={scrollRight}
-        aria-label="Scroll Right"
-      />
-      <ChevronsRight
-        onClick={goToNextPage}
-        className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
-        aria-label="Scroll Right"
-      />
+      {isVisible ? (
+        <ChevronRight
+          className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
+          onClick={scrollRight}
+          aria-label="Scroll Right"
+        />
+      ) : null}
+      {onlyFavorites ? null : (
+        <ChevronsRight
+          onClick={goToNextPage}
+          className="w-[40px] h-[40px] cursor-pointer hover:scale-130 transition-transform duration-250"
+          aria-label="Scroll Right"
+        />
+      )}
     </div>
   );
 }
