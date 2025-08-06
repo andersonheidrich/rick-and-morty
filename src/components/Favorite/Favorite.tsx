@@ -1,14 +1,14 @@
 import { useFavorites } from "@/hooks/useFavorites";
 import { Heart } from "lucide-react";
 import { useQuery } from "@apollo/client";
-import { GET_CHARACTER_BY_ID } from "@/graphql/queries";
+import getCharacterById from "@/graphql/getCharacterById.graphql";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 
 const Favorite = () => {
   const { activeCharacterId, onChangeId } = useActiveCharacter();
   const { favorites, isFavorite, toggleFavorite } = useFavorites();
 
-  const { data } = useQuery(GET_CHARACTER_BY_ID, {
+  const { data } = useQuery(getCharacterById, {
     variables: { id: activeCharacterId },
     skip: !activeCharacterId,
   });

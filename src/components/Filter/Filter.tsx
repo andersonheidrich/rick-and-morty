@@ -1,17 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { FilterProps } from "./interfaces";
 
 const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
     onFilterChange(value);
   };
+
+  useEffect(() => {
+    const checkViewport = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkViewport();
+
+    window.addEventListener("resize", checkViewport);
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
 
   return (
     <div className="flex w-[57px] md:w-[160px] h-[40px]">
@@ -28,7 +40,9 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
           placeholder="Busca"
           value={searchTerm}
           onChange={handleSearchChange}
-          className="w-[14px] md:w-[120px] h-[40px] py-2 pr-4 pl-2 rounded-tr-[12px] rounded-br-[12px]"
+          className={`w-[14px] md:w-[120px] h-[40px] py-2 pr-4 pl-2 rounded-tr-[12px] rounded-br-[12px] ${
+            isMobile ? "outline-none" : ""
+          }`}
         />
       </div>
     </div>

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 "use client";
-
 import { useQuery } from "@apollo/client";
-import { GET_CHARACTERS } from "@/graphql/queries";
+import getCharacters from "@/graphql/getCharacters.graphql";
 import Image from "next/image";
 import { CharacterCarouselProps } from "./interfaces";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -18,7 +17,7 @@ export default function CharacterCarousel({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [allCharacters, setAllCharacters] = useState<any[]>([]);
 
-  const { loading, error, data, fetchMore } = useQuery(GET_CHARACTERS, {
+  const { loading, error, data, fetchMore } = useQuery(getCharacters, {
     variables: { page: 1 },
     notifyOnNetworkStatusChange: true,
   });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { GET_CHARACTERS } from "@/graphql/queries";
+import getCharacters from "@/graphql/getCharacters.graphql";
 import {
   CharacterCarousel,
   CharacterDetails,
@@ -20,7 +20,7 @@ export default function Home() {
 
   const { favorites } = useFavorites();
 
-  const { data, loading, error } = useQuery(GET_CHARACTERS, {
+  const { data, loading, error } = useQuery(getCharacters, {
     variables: { name: debouncedSearchTerm },
     fetchPolicy: "no-cache",
   });

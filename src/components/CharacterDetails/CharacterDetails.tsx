@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { CharacterDetailProps } from "./interfaces";
 import Image from "next/image";
-import { GET_CHARACTER_BY_ID } from "@/graphql/queries";
+import getCharacterById from "@/graphql/getCharacterById.graphql";
 import { useEffect } from "react";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 
@@ -9,7 +9,7 @@ export default function CharacterDetails({
   id,
   onChangeId,
 }: CharacterDetailProps) {
-  const { data, loading, error } = useQuery(GET_CHARACTER_BY_ID, {
+  const { data, loading, error } = useQuery(getCharacterById, {
     variables: { id },
     skip: !id,
   });
