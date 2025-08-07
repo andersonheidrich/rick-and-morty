@@ -8,7 +8,7 @@ import {
   Header,
   Navbar,
 } from "@/components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useDebounce } from "use-debounce";
 
@@ -25,15 +25,24 @@ export default function Home() {
     fetchPolicy: "no-cache",
   });
 
-  const characters = data?.characters?.results ?? [];
+  const characters = useMemo(() => {
+    return data?.characters?.results ?? [];
+  }, [data?.characters?.results]);
 
   useEffect(() => {
     if (selectedMenu === "items") {
-      if (data?.characters?.results?.length > 0 && !selectedId) {
-        setSelectedId(data.characters.results[0].id);
+      if (characters.length === 0) {
+        setSelectedId(null);
+      } else if (
+        !selectedId ||
+        !characters.find(
+          (character: { id: string }) => character.id === selectedId
+        )
+      ) {
+        setSelectedId(characters[0].id);
       }
     }
-  }, [data, selectedId, selectedMenu]);
+  }, [characters, selectedId, selectedMenu]);
 
   useEffect(() => {
     if (selectedMenu !== "favorites") return;
@@ -61,6 +70,7 @@ export default function Home() {
         Carregando...
       </div>
     );
+
   if (error) return <p className="text-center">Erro: {error.message}</p>;
 
   return (
@@ -86,7 +96,11 @@ export default function Home() {
             characters={characters}
           />
         ) : (
-          <CharacterCarousel onSelectId={setSelectedId} onlyFavorites />
+          <CharacterCarousel
+            onSelectId={setSelectedId}
+            onlyFavorites={selectedMenu === "favorites"}
+            characters={characters}
+          />
         )}
       </div>
     </div>

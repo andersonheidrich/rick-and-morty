@@ -45,6 +45,7 @@ export default function CharacterDetails({
           width={291}
           height={320}
           className="rounded-[12px] h-[320px]"
+          priority
         />
         <div className="w-[308px] md:w-[1101px] h-[236px] md:h-[240px] gap-[16px] py-4 px-8 font-normal leading-[32px] tracking-[0px]">
           <h1 className="w-[244px] md:w-[1037px] h-[56px] text-[24px] md:text-[48px] mb-[16px]">

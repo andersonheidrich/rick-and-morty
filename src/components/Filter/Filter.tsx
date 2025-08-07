@@ -5,12 +5,12 @@ import { Search } from "lucide-react";
 import { FilterProps } from "./interfaces";
 
 const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [value, setValue] = useState("");
   const [isMobile, setIsMobile] = useState(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearchTerm(value);
+    setValue(value);
     onFilterChange(value);
   };
 
@@ -38,7 +38,7 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
           name="search"
           type="text"
           placeholder="Busca"
-          value={searchTerm}
+          value={value}
           onChange={handleSearchChange}
           className={`w-[14px] md:w-[120px] h-[40px] py-2 pr-4 pl-2 rounded-tr-[12px] rounded-br-[12px] ${
             isMobile ? "outline-none" : ""

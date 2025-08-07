@@ -30,7 +30,7 @@ const Favorite = () => {
   if (!character) return null;
 
   return (
-    <button
+    <div
       onClick={handleToggleFavorite}
       className="flex w-[40px] h-[40px] max-w-[480px] gap-[8px] px-[10px] rounded-[12px] items-center bg-[#373737] cursor-pointer"
     >
@@ -39,7 +39,7 @@ const Favorite = () => {
         fill={isFavorite(character.id) ? "red" : "#373737"}
         stroke={isFavorite(character.id) ? "red" : "#C7C7C7"}
       />
-    </button>
+    </div>
   );
 };
 
